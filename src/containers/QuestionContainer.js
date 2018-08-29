@@ -14,6 +14,7 @@ class QuestionContainer extends React.Component {
       answered: false
     };
     this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
+    this.restartQuestions = this.restartQuestions.bind(this);
   };
 
   componentDidMount() {
@@ -65,10 +66,15 @@ class QuestionContainer extends React.Component {
     return array;
   }
 
+  restartQuestions(){
+    this.render();
+    
+  }
+
   render() {
     let optionalRenderableModal = null;
     if (this.state.answered) {
-      optionalRenderableModal = <Modal result= {this.state.result}/>
+      optionalRenderableModal = <Modal result= {this.state.result} pageRefresh = {this.restartQuestions}/>
     }
     return (
       <div className ="question-container">

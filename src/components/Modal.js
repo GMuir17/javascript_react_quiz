@@ -5,6 +5,7 @@ const Modal = function(props) {
     return (
       <div className='result-modal'>
         <h3>True</h3>
+        <button name="page-refresh" onClick = {props.pageRefresh} > More Questions</button>
       </div>
     )
   }
