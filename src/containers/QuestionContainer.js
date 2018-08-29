@@ -26,7 +26,7 @@ class QuestionContainer extends React.Component {
     .then((data) => {
       const incorrectAnswers = data.results[0].incorrect_answers;
       const rightAnswer = data.results[0].correct_answer;
-      const allAnswers = incorrectAnswers.push(rightAnswer);
+      incorrectAnswers.push(rightAnswer);
 
       this.setState({
         question: data.results[0].question,
@@ -68,17 +68,23 @@ class QuestionContainer extends React.Component {
 
   restartQuestions(){
     window.location.reload();
+  }
 
+  closeModal(optionalRenderableModal){
+    optionalRenderableModal = null;
   }
 
   render() {
     let optionalRenderableModal = null;
     if (this.state.answered) {
-      optionalRenderableModal = <Modal result= {this.state.result} pageRefresh = {this.restartQuestions}/>
+      optionalRenderableModal = <Modal
+        result= {this.state.result}
+        pageRefresh = {this.restartQuestions}
+        closeModal = {this.closeModal(optionalRenderableModal)}
+      />
     }
     return (
       <div className ="question-container">
-        {optionalRenderableModal}
 
         <QuestionDetail
           question= {this.state.question}
@@ -88,6 +94,8 @@ class QuestionContainer extends React.Component {
           answers ={this.state.answers}
           onAnswerSelected={this.handleAnswerSelected}
         />
+        
+        {optionalRenderableModal}
       </div>
     );
   }

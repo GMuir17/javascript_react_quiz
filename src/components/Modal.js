@@ -13,6 +13,7 @@ const Modal = function(props) {
     return (
       <div className='result-modal'>
         <h3>False</h3>
+        <button name= "window-close" onClick={props.closeModal}> Try Again!</button>
       </div>
     )
   }
