@@ -1,8 +1,6 @@
 import React from 'react';
 import QuestionDetail from '../components/QuestionDetail.js';
-import AnswerSubmit from '../components/AnswerSubmit.js';
 import AnswerOptions from '../components/AnswerOptions.js';
-import Result from '../components/Result.js';
 import Modal from '../components/Modal.js';
 
 class QuestionContainer extends React.Component {
@@ -31,7 +29,7 @@ class QuestionContainer extends React.Component {
 
       this.setState({
         question: data.results[0].question,
-        answers: incorrectAnswers,
+        answers: this.shuffleAnswers(incorrectAnswers),
         correctAnswer: data.results[0].correct_answer
       });
     })
@@ -57,6 +55,16 @@ class QuestionContainer extends React.Component {
     }
   };
 
+  shuffleAnswers(array) {
+    for (let i = array.length -1; i >= 0; i--){
+      let randomIndex = Math.floor(Math.random() * (i + 1));
+      let itemAtIndex = array[randomIndex];
+      array[randomIndex] = array[i]
+      array[i] = itemAtIndex
+    }
+    return array;
+  }
+
   render() {
     let optionalRenderableModal = null;
     if (this.state.answered) {
@@ -65,6 +73,7 @@ class QuestionContainer extends React.Component {
     return (
       <div className ="question-container">
         {optionalRenderableModal}
+
         <QuestionDetail
           question= {this.state.question}
         />
@@ -73,11 +82,6 @@ class QuestionContainer extends React.Component {
           answers ={this.state.answers}
           onAnswerSelected={this.handleAnswerSelected}
         />
-
-        <Result
-            result= {this.state.result}
-        />
-
       </div>
     );
   }
