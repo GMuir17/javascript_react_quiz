@@ -46,6 +46,11 @@ class QuestionContainer extends React.Component {
         result: true
       })
     }
+    else {
+      this.setState({
+        result:false
+      })
+    }
   };
 
   render() {
@@ -58,10 +63,6 @@ class QuestionContainer extends React.Component {
         <AnswerOptions
           answers ={this.state.answers}
           onAnswerSelected={this.handleAnswerSelected}
-        />
-
-        <AnswerSubmit
-          correctAnswer = {this.state.correctAnswer}
         />
 
           <Result
