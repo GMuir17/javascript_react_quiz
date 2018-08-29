@@ -3,6 +3,7 @@ import QuestionDetail from '../components/QuestionDetail.js';
 import AnswerSubmit from '../components/AnswerSubmit.js';
 import AnswerOptions from '../components/AnswerOptions.js';
 import Result from '../components/Result.js';
+import Modal from '../components/Modal.js';
 
 class QuestionContainer extends React.Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class QuestionContainer extends React.Component {
       question: null,
       answers: [],
       correctAnswer: null,
-      result: null
+      result: null,
+      answered: false
     };
     this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
   };
@@ -31,9 +33,7 @@ class QuestionContainer extends React.Component {
         question: data.results[0].question,
         answers: incorrectAnswers,
         correctAnswer: data.results[0].correct_answer
-
       });
-
     })
     .catch((err) => {
       console.error(err);
@@ -41,6 +41,10 @@ class QuestionContainer extends React.Component {
   };
 
   handleAnswerSelected(index) {
+    this.setState({
+      answered:true
+    });
+
     if (this.state.answers[index] === this.state.correctAnswer) {
       this.setState({
         result: true
@@ -54,8 +58,13 @@ class QuestionContainer extends React.Component {
   };
 
   render() {
+    let optionalRenderableModal = null;
+    if (this.state.answered) {
+      optionalRenderableModal = <Modal result= {this.state.result}/>
+    }
     return (
       <div className ="question-container">
+        {optionalRenderableModal}
         <QuestionDetail
           question= {this.state.question}
         />
@@ -65,17 +74,13 @@ class QuestionContainer extends React.Component {
           onAnswerSelected={this.handleAnswerSelected}
         />
 
-          <Result
+        <Result
             result= {this.state.result}
         />
 
       </div>
     );
   }
-
-
-
-
 };
 
 export default QuestionContainer;
