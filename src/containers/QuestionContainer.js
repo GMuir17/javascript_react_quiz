@@ -47,10 +47,10 @@ class QuestionContainer extends React.Component {
         answers ={this.state.answers}
       />
 
-      {/* <AnswerSubmit
+      <AnswerSubmit
         correctAnswer = {this.state.correctAnswer}
       />
-
+{/*
       <Result
       /> */}
 

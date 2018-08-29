@@ -6,7 +6,7 @@ const AnswerOptions = function (props) {
     return (
       <label>
         <p className='answer-text'>{answer}</p>
-        <input type='radio' name='answers' id={index}></input>
+        <input type='radio' name='answers' id={index} value={index}></input>
       </label>
     )
   })
