@@ -10,7 +10,8 @@ class QuestionContainer extends React.Component {
     this.state = {
       question: null,
       answers: [],
-      correctAnswer: null
+      correctAnswer: null,
+      result: null
     };
     this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
   };
@@ -30,6 +31,7 @@ class QuestionContainer extends React.Component {
         question: data.results[0].question,
         answers: incorrectAnswers,
         correctAnswer: data.results[0].correct_answer
+
       });
 
     })
@@ -40,7 +42,9 @@ class QuestionContainer extends React.Component {
 
   handleAnswerSelected(index) {
     if (this.state.answers[index] === this.state.correctAnswer) {
-      console.log("CORRECT");
+      this.setState({
+        result: true
+      })
     }
   };
 
@@ -59,9 +63,10 @@ class QuestionContainer extends React.Component {
         <AnswerSubmit
           correctAnswer = {this.state.correctAnswer}
         />
-        {/*
+
           <Result
-        /> */}
+            result= {this.state.result}
+        />
 
       </div>
     );
