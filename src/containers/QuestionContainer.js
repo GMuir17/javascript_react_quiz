@@ -67,8 +67,8 @@ class QuestionContainer extends React.Component {
   }
 
   restartQuestions(){
-    this.render();
-    
+    window.location.reload();
+
   }
 
   render() {
