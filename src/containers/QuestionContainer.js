@@ -12,47 +12,56 @@ class QuestionContainer extends React.Component {
       answers: [],
       correctAnswer: null
     };
+    this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
   };
 
   componentDidMount() {
     const url = 'https://opentdb.com/api.php?amount=1&category=9&difficulty=easy&type=multiple';
     fetch(url)
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        const incorrectAnswers = data.results[0].incorrect_answers;
-        const rightAnswer = data.results[0].correct_answer;
-        const allAnswers = incorrectAnswers.push(rightAnswer);
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      const incorrectAnswers = data.results[0].incorrect_answers;
+      const rightAnswer = data.results[0].correct_answer;
+      const allAnswers = incorrectAnswers.push(rightAnswer);
 
-        this.setState({
-          question: data.results[0].question,
-          answers: incorrectAnswers,
-          correctAnswer: data.results[0].correct_answer
-        });
-
-      })
-      .catch((err) => {
-        console.error(err);
+      this.setState({
+        question: data.results[0].question,
+        answers: incorrectAnswers,
+        correctAnswer: data.results[0].correct_answer
       });
+
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+  };
+
+  handleAnswerSelected(index) {
+    if (this.state.answers[index] === this.state.correctAnswer) {
+      console.log("CORRECT");
+    }
   };
 
   render() {
     return (
       <div className ="question-container">
-       <QuestionDetail
-         question= {this.state.question}
-         />
-      <AnswerOptions
-        answers ={this.state.answers}
-      />
+        <QuestionDetail
+          question= {this.state.question}
+        />
 
-      <AnswerSubmit
-        correctAnswer = {this.state.correctAnswer}
-      />
-{/*
-      <Result
-      /> */}
+        <AnswerOptions
+          answers ={this.state.answers}
+          onAnswerSelected={this.handleAnswerSelected}
+        />
+
+        <AnswerSubmit
+          correctAnswer = {this.state.correctAnswer}
+        />
+        {/*
+          <Result
+        /> */}
 
       </div>
     );

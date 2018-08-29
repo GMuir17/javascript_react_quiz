@@ -6,17 +6,27 @@ const AnswerOptions = function (props) {
     return (
       <label>
         <p className='answer-text'>{answer}</p>
-        <input type='radio' name='answers' id={index} value={index}></input>
+        <input
+          type='radio'
+          name='answers'
+          id={index}
+          value={index}
+          onChange={handleSelect}
+        >
+        </input>
       </label>
     )
   })
+
+  function handleSelect(evt) {
+    props.onAnswerSelected(evt.target.value);
+  }
 
   return (
     <div>
       {radios}
     </div>
   )
-
-}
+};
 
 export default AnswerOptions;
